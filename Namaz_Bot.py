@@ -7,7 +7,7 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 # -----------------------------
 # Ortam değişkeninden TOKEN al
 # -----------------------------
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+TOKEN = os.getenv("TOKEN")
 if not TOKEN:
     raise ValueError("BOT_TOKEN ortam değişkeni bulunamadı!")
 
