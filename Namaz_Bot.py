@@ -224,19 +224,14 @@ application.add_handler(CallbackQueryHandler(exit_session_handler, pattern="^exi
 # -----------------------------
 # Webhook endpoint
 # -----------------------------
-@app.route("/webhook", methods=["POST"])
+@app.route(f"/{TOKEN}", methods=["POST"])
 def webhook():
     try:
         update = Update.de_json(request.get_json(force=True), bot)
-        logger.info(f"Update alındı: {update}")
         asyncio.create_task(application.process_update(update))
     except Exception as e:
         logger.error(f"Webhook işlem hatası: {e}")
     return "ok", 200
-
-@app.route("/")
-def index():
-    return "Bot çalışıyor!", 200
 
 # -----------------------------
 # Flask çalıştırma
