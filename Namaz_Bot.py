@@ -226,9 +226,12 @@ application.add_handler(CallbackQueryHandler(exit_session_handler, pattern="^exi
 # -----------------------------
 @app.route(f"/{TOKEN}", methods=["POST"])
 def webhook():
+    logger.info("Webhook çağrıldı!")  # Her POST geldiğinde log düşer
     try:
-        update = Update.de_json(request.get_json(force=True), bot)
-        asyncio.create_task(application.process_update(update))
+        update = Update.de_json(request.get_json(force=True), application.bot)
+        logger.info(f"Gelen update: {update}")  # Update objesini logla
+        asyncio.run(application.process_update(update))
+        logger.info("Update başarıyla işlendi.")
     except Exception as e:
         logger.error(f"Webhook işlem hatası: {e}")
     return "ok", 200
